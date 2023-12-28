@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+  <title>Create Post</title>
+  <style>
+    /* Footer Styles */
+    .footer {
+        color: black; /* Light text color */
+        padding: 20px 0; /* Adjust the padding as needed */
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        background-color: #f8f9fa; /* Light background color */
+    }
+
+    .Essential,
+    span,
+    a {
+        color: black; /* Black text color for links */
+        display: inline-block;
+        margin-right: 20px; /* Adjust the spacing between links */
+        text-decoration: none;
+    }
+
+    .link-light {
+        color: #6c757d; /* Gray text color for small links */
+    }
+
+    .link-light:hover {
+        color: #000000; /* Black text color on hover */
+    }
+
+    /* Container Styles */
+    .container {
+        max-width: 960px; /* Limit the width of the container */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .col-auto {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    @media (max-width: 768px) {
+        .col-auto {
+            width: 100%;
+            margin-bottom: 20px; /* Add spacing between columns on small screens */
+        }
+    }
+
+    /* Rest of your styles... */
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .footer {
+        margin-top: auto;
+    }
+
+    /* Form Styles */
+<!--    form {-->
+<!--        max-width: 600px;-->
+<!--        margin: 20px auto;-->
+<!--        padding: 20px;-->
+<!--        border: 1px solid #dee2e6;-->
+<!--        border-radius: 4px;-->
+<!--        background-color: #ffffff;-->
+<!--    }-->
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 8px;
+<!--        margin-bottom: 15px;-->
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #0056b3;
+    }
+
+    h2{
+      margin: auto;
+    }
+
+  </style>
+</head>
+
+<body>
+<div layout:fragment="content">
+  <h2>Create Post</h2>
+  <form th:action="@{/posts/create}" th:object="${post}" method="post">
+    <label>Title: <input type="text" th:field="*{title}" /></label><br/>
+    <label>Content: <textarea type="text" th:field="*{content}" /></label><br/>
+    <button type="submit">만들기</button>
+    <button type="reset">지우기</button>
+  </form>
+</div>
+</body>
+
+</html>

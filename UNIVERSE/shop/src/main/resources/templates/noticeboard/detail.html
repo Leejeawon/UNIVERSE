@@ -1,0 +1,89 @@
+<!-- detail.html -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content-container {
+            text-align: center;
+            padding: 20px;
+            margin: 50px auto; /* Center the container horizontally */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 60%; /* Adjust the width as needed */
+        }
+
+        .content-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .content-container th, .content-container td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .content-container th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .content-container h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .content-container p {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .content-container a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .content-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+<div layout:fragment="content" class="content-container">
+    <table>
+        <tr>
+            <th>제목</th>
+        </tr>
+        <tr>
+            <td th:if="${post}" th:text="${post.title}"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>내용</th>
+        </tr>
+        <tr>
+            <td th:if="${post}" th:text="${post.content}"></td>
+        </tr>
+    </table>
+    <a th:href="@{'/noticeboard/list'}">게시글 목록</a>
+</div>
+</body>
+
+</html>

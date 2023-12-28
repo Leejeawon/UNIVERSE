@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content" class="container">
+    <h2>Member Details</h2>
+
+    <p><strong>ID:</strong> [[${memberDetails.id}]]</p>
+    <p><strong>Login ID:</strong> [[${memberDetails.loginid}]]</p>
+    <p><strong>Name:</strong> [[${memberDetails.name}]]</p>
+    <p><strong>Email:</strong> [[${memberDetails.email}]]</p>
+    <p><strong>Address:</strong> [[${memberDetails.address}]]</p>
+    <p><strong>Phone Number:</strong> [[${memberDetails.phonenumber}]]</p>
+    <p><strong>Role:</strong> [[${memberDetails.role}]]</p>
+    <p><strong>OAuth Type:</strong> [[${memberDetails.oauth}]]</p>
+
+    <!-- Add links or buttons for editing and deleting -->
+    <a th:href="@{/members/{id}/edit(id=${memberDetails.id})}">Edit</a>
+    <a th:href="@{/members/{id}/delete(id=${memberDetails.id})}">Delete</a>
+</div>
+
+</html>

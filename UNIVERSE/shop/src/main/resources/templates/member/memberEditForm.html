@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content" class="container">
+    <h2>Edit Member</h2>
+
+    <form th:object="${memberFormDto}" th:action="@{/members/{id}/edit(id=${memberDetails.id})}" method="post">
+        <!-- Include fields for member edit form -->
+        <div class="form-group">
+            <label for="loginid">Login ID:</label>
+            <input type="text" id="loginid" th:field="*{loginid}" required />
+        </div>
+
+        <!-- Include other fields as needed -->
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" />
+        </div>
+
+        <div class="form-group">
+            <label for="passwordCheck">Password Check:</label>
+            <input type="password" id="passwordCheck" th:field="*{passwordCheck}" />
+        </div>
+
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+
+</html>

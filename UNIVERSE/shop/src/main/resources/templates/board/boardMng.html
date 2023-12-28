@@ -1,0 +1,376 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{layouts/layout1}">-->
+
+<!--&lt;!&ndash; 사용자 스크립트 추가 &ndash;&gt;-->
+<!--<th:block layout:fragment="script">-->
+<!--  <script th:inline="javascript">-->
+<!--    // form action 으로 실행하지 않게 하기-->
+<!--    $(document).ready(function(){-->
+<!--        $("#searchBtn").on("click",function(e) {-->
+<!--            e.preventDefault();-->
+<!--            page(0);-->
+<!--        });-->
+<!--    });-->
+
+<!--    // 페이지 처리를 위한 함수-->
+<!--    function page(page){-->
+<!--        var searchDateType = $("#searchDateType").val();-->
+<!--        var searchBy = $("#searchBy").val();-->
+<!--        var searchQuery = $("#searchQuery").val();-->
+
+<!--        location.href="/admin/boards/" + page + "?searchDateType=" + searchDateType-->
+<!--        + "&searchBy=" + searchBy-->
+<!--        + "&searchQuery=" + searchQuery;-->
+<!--    }-->
+
+<!--  </script>-->
+<!--</th:block>-->
+
+<!--&lt;!&ndash; 사용자 CSS 추가 &ndash;&gt;-->
+<!--<th:block layout:fragment="css">-->
+<!--  <style>-->
+<!--    select{-->
+<!--        margin-right:10px;-->
+<!--    }-->
+<!--    /* Footer Styles */-->
+<!--    .footer {-->
+<!--        color: black; /* Light text color */-->
+<!--        padding: 20px 0; /* Adjust the padding as needed */-->
+<!--        position: relative;-->
+<!--        bottom: 0;-->
+<!--        width: 100%;-->
+<!--        background-color: #f8f9fa; /* Light background color */-->
+<!--    }-->
+
+<!--    .Essential,-->
+<!--    span,-->
+<!--    a {-->
+<!--        color: black; /* Black text color for links */-->
+<!--        display: inline-block;-->
+<!--        margin-right: 20px; /* Adjust the spacing between links */-->
+<!--        text-decoration: none;-->
+<!--    }-->
+
+<!--    .link-light {-->
+<!--        color: #6c757d; /* Gray text color for small links */-->
+<!--    }-->
+
+<!--    .link-light:hover {-->
+<!--        color: #000000; /* Black text color on hover */-->
+<!--    }-->
+
+<!--    /* Container Styles */-->
+<!--    .container {-->
+<!--        max-width: 960px; /* Limit the width of the container */-->
+<!--        margin: 0 auto; /* Center the container */-->
+<!--    }-->
+
+<!--    .row {-->
+<!--        display: flex;-->
+<!--        flex-wrap: wrap;-->
+<!--        justify-content: space-between;-->
+<!--    }-->
+
+<!--    .col-auto {-->
+<!--        flex: 0 0 auto;-->
+<!--        width: auto;-->
+<!--    }-->
+
+<!--    @media (max-width: 768px) {-->
+<!--        .col-auto {-->
+<!--            width: 100%;-->
+<!--            margin-bottom: 20px; /* Add spacing between columns on small screens */-->
+<!--        }-->
+<!--    }-->
+
+<!--    /* Rest of your styles... */-->
+
+<!--    body {-->
+<!--        display: flex;-->
+<!--        flex-direction: column;-->
+<!--        min-height: 100vh;-->
+<!--        margin: 0;-->
+<!--    }-->
+
+<!--    .footer {-->
+<!--        margin-top: auto;-->
+<!--    }-->
+
+<!--    /* Form Styles */-->
+<!--&lt;!&ndash;    form {&ndash;&gt;-->
+<!--&lt;!&ndash;        max-width: 600px;&ndash;&gt;-->
+<!--&lt;!&ndash;        margin: 20px auto;&ndash;&gt;-->
+<!--&lt;!&ndash;        padding: 20px;&ndash;&gt;-->
+<!--&lt;!&ndash;        border: 1px solid #dee2e6;&ndash;&gt;-->
+<!--&lt;!&ndash;        border-radius: 4px;&ndash;&gt;-->
+<!--&lt;!&ndash;        background-color: #ffffff;&ndash;&gt;-->
+<!--&lt;!&ndash;    }&ndash;&gt;-->
+
+<!--    label {-->
+<!--        display: block;-->
+<!--        margin-bottom: 10px;-->
+<!--    }-->
+
+<!--    input,-->
+<!--    textarea {-->
+<!--        width: 100%;-->
+<!--        padding: 8px;-->
+<!--&lt;!&ndash;        margin-bottom: 15px;&ndash;&gt;-->
+<!--        box-sizing: border-box;-->
+<!--    }-->
+
+<!--    button {-->
+<!--        background-color: #007bff;-->
+<!--        color: #ffffff;-->
+<!--        padding: 10px 15px;-->
+<!--        border: none;-->
+<!--        border-radius: 4px;-->
+<!--        cursor: pointer;-->
+<!--    }-->
+
+<!--    button:hover {-->
+<!--        background-color: #0056b3;-->
+<!--    }-->
+
+<!--    a {-->
+<!--        color: #007bff;-->
+<!--        text-decoration: none;-->
+<!--    }-->
+
+<!--    a:hover {-->
+<!--        color: #0056b3;-->
+<!--    }-->
+
+<!--    h2{-->
+<!--      margin: auto;-->
+<!--    }-->
+<!--  </style>-->
+<!--</th:block>-->
+
+<!--<div layout:fragment="content">-->
+
+<!--  <form th:action="@{'/admin/boards/' + ${boards.number}}" role="form" method="get" th:object="${boards}">-->
+<!--    <table class="table">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <td>상품아이디</td>-->
+<!--        <td>상품명</td>-->
+<!--        <td>등록자</td>-->
+<!--        <td>등록일</td>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr th:each="board, status: ${boards.getContent()}">-->
+<!--        <td th:text="${board.id}"></td>-->
+<!--        <td>-->
+<!--          <a th:href="'/admin/board/'+${board.id}" th:text="${board.boardName}"></a>-->
+<!--        </td>-->
+<!--        <td th:text="${board.createdBy}"></td>-->
+<!--        <td th:text="${board.regTime}"></td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--    &lt;!&ndash; 페이징 처리-->
+<!--         th:with : 변수값을 정의할 때 사용-->
+<!--         start = (현재페이지번호/최대페이지번호)*최대페이지번호 +1 &ndash;&gt;-->
+<!--    <div th:with="start=${(boards.number/maxPage)*maxPage + 1}, end=(${(boards.totalPages == 0) ? 1 : (start + (maxPage - 1) < boards.totalPages ? start + (maxPage - 1) : boards.totalPages)})" >-->
+<!--      <ul class="pagination justify-content-center">-->
+
+<!--        <li class="page-item" th:classappend="${boards.first}?'disabled'">-->
+<!--          <a th:onclick="'javascript:page(' + ${boards.number - 1} + ')'" aria-label='Previous' class="page-link">-->
+<!--            <span aria-hidden='true'>Previous</span>-->
+<!--          </a>-->
+<!--        </li>-->
+
+<!--        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${boards.number eq page-1}?'active':''">-->
+<!--          <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>-->
+<!--        </li>-->
+
+<!--        <li class="page-item" th:classappend="${boards.last}?'disabled'">-->
+<!--          <a th:onclick="'javascript:page(' + ${boards.number + 1} + ')'" aria-label='Next' class="page-link">-->
+<!--            <span aria-hidden='true'>Next</span>-->
+<!--          </a>-->
+<!--        </li>-->
+
+<!--      </ul>-->
+<!--    </div>-->
+
+<!--    <div class="form-inline justify-content-center" th:object="${boardSearchDto}">-->
+<!--      <select th:field="*{searchDateType}" class="form-control" style="width:auto;">-->
+<!--        <option value="all">전체기간</option>-->
+<!--        <option value="1d">1일</option>-->
+<!--        <option value="1w">1주</option>-->
+<!--        <option value="1m">1개월</option>-->
+<!--        <option value="6m">6개월</option>-->
+<!--      </select>-->
+<!--      <select th:field="*{searchBy}" class="form-control" style="width:auto;">-->
+<!--        <option value="boardName">상품명</option>-->
+<!--        <option value="createdBy">등록자</option>-->
+<!--      </select>-->
+<!--      <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">-->
+<!--      <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>-->
+<!--    </div>-->
+<!--  </form>-->
+
+<!--</div>-->
+
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    // form action 으로 실행하지 않게 하기
+    $(document).ready(function(){
+        $("#searchBtn").on("click",function(e) {
+            e.preventDefault();
+            page(0);
+        });
+    });
+
+    // 페이지 처리를 위한 함수
+    function page(page){
+        var searchDateType = $("#searchDateType").val();
+        var searchBy = $("#searchBy").val();
+        var searchQuery = $("#searchQuery").val();
+
+        location.href="/admin/boards/" + page + "?searchDateType=" + searchDateType
+        + "&searchBy=" + searchBy
+        + "&searchQuery=" + searchQuery;
+    }
+
+  </script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+    /* Add your existing styles here */
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .pagination {
+        margin-top: 20px;
+    }
+
+    .pagination li {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .pagination .page-item {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .pagination .page-link {
+        color: #007bff;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .pagination .page-link:hover {
+        color: #0056b3;
+    }
+
+    .form-inline {
+        margin-top: 20px;
+    }
+
+    .form-inline select, .form-inline input, .form-inline button {
+        margin-right: 10px;
+    }
+  </style>
+</th:block>
+
+<div layout:fragment="content">
+
+  <form th:action="@{'/admin/boards/' + ${boards.number}}" role="form" method="get" th:object="${boards}">
+    <table class="table">
+      <thead>
+      <tr>
+        <td>상품아이디</td>
+        <td>상품명</td>
+        <td>등록자</td>
+        <td>등록일</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="board, status: ${boards.getContent()}">
+        <td th:text="${board.id}"></td>
+        <td>
+          <a th:href="'/admin/board/'+${board.id}" th:text="${board.boardName}"></a>
+        </td>
+        <td th:text="${board.createdBy}"></td>
+        <td th:text="${board.regTime}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <!-- 페이징 처리
+         th:with : 변수값을 정의할 때 사용
+         start = (현재페이지번호/최대페이지번호)*최대페이지번호 +1 -->
+    <div th:with="start=${(boards.number/maxPage)*maxPage + 1}, end=(${(boards.totalPages == 0) ? 1 : (start + (maxPage - 1) < boards.totalPages ? start + (maxPage - 1) : boards.totalPages)})" >
+      <ul class="pagination justify-content-center">
+
+        <li class="page-item" th:classappend="${boards.first}?'disabled'">
+          <a th:onclick="'javascript:page(' + ${boards.number - 1} + ')'" aria-label='Previous' class="page-link">
+            <span aria-hidden='true'>Previous</span>
+          </a>
+        </li>
+
+        <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${boards.number eq page-1}?'active':''">
+          <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+        </li>
+
+        <li class="page-item" th:classappend="${boards.last}?'disabled'">
+          <a th:onclick="'javascript:page(' + ${boards.number + 1} + ')'" aria-label='Next' class="page-link">
+            <span aria-hidden='true'>Next</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
+    <div class="form-inline justify-content-center" th:object="${boardSearchDto}">
+      <select th:field="*{searchDateType}" class="form-control" style="width:auto;">
+        <option value="all">전체기간</option>
+        <option value="1d">1일</option>
+        <option value="1w">1주</option>
+        <option value="1m">1개월</option>
+        <option value="6m">6개월</option>
+      </select>
+      <select th:field="*{searchBy}" class="form-control" style="width:auto;">
+        <option value="boardName">상품명</option>
+        <option value="createdBy">등록자</option>
+      </select>
+      <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
+      <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+    </div>
+  </form>
+
+</div>
+
+</html>

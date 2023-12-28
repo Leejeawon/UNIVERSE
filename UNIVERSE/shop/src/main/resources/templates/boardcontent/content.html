@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+
+        .carousel-inner > .item {
+            height: 350px;
+        }
+        .margin{
+            margin-bottom:30px;
+        }
+        .banner{
+            height: 300px;
+            position: absolute; top:0; left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .card-text{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        a:hover{
+            text-decoration:none;
+        }
+        .center{
+            text-align:center;
+        }
+
+        .slide {
+        	margin-bottom: 50px;
+        }
+        /* Footer Styles */
+    .footer {
+        color: black; /* Light text color */
+        padding: 20px 0; /* Adjust the padding as needed */
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        background-color: #f8f9fa; /* Light background color */
+    }
+
+    .Essential,
+    span,
+    a {
+        color: black; /* Black text color for links */
+        display: inline-block;
+        margin-right: 20px; /* Adjust the spacing between links */
+        text-decoration: none;
+    }
+
+    .link-light {
+        color: #6c757d; /* Gray text color for small links */
+    }
+
+    .link-light:hover {
+        color: #000000; /* Black text color on hover */
+    }
+
+    /* Container Styles */
+    .container {
+        max-width: 960px; /* Limit the width of the container */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .col-auto {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    @media (max-width: 768px) {
+        .col-auto {
+            width: 100%;
+            margin-bottom: 20px; /* Add spacing between columns on small screens */
+        }
+    }
+
+    /* Rest of your styles... */
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .footer {
+        margin-top: auto;
+    }
+
+    /* Form Styles */
+<!--    form {-->
+<!--        max-width: 600px;-->
+<!--        margin: 20px auto;-->
+<!--        padding: 20px;-->
+<!--        border: 1px solid #dee2e6;-->
+<!--        border-radius: 4px;-->
+<!--        background-color: #ffffff;-->
+<!--    }-->
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 8px;
+<!--        margin-bottom: 15px;-->
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #0056b3;
+    }
+
+    h2{
+      margin: auto;
+    }
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+
+    <!-- 이미지 슬라이드 -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="https://lh3.googleusercontent.com/fife/APg5EOZv6ZV8CJZ9HwjbmR_uRLgLqV_pWsB8R_BGTyu5stqpupeubNPtnbmkJ_eo8Lp-p2SndvlYzbluYzmhuul-P8T2Pr3REuzg2ReSYW3AqF9kSmQ6MVvx_FYAyAGaG039-9dXNZH9L7hXOx6eVJuMQvRe2d6MwF9BSdrXSz5hOcYmS-iQrUO4e7QN3RsE-vJ8nUUK8296mfcQQIe5clI1TGJScZ2m4QZWLkiGIVkzbtdnShwDpKkfZh2BdWsquk4jqYGv37YCt6pSPhE4GiwAxvdT8lDS4jMZZEFCnfio0eDLfODQuG1VDmUXwV4JXrAFqGc9g8jBNqSulKrfMfjOJsW_lH-VSvqObe7K5Lks3O4zoNqfSlFBMutqnTy1l7qEebjtGzDgzqVDKGU1M-9Y5Nc_aCaNikxKEgG19KJLiRQ2AKZtDIt1e10E4bCs9QLtPqh4AluALD6dNQRY6YcipBZMybTHO81DEbHeo89IsB6tJGQQJCYPCy-cxMv4H4cy1vIa5GNxjyV3HRwBZLfVkohiH1dK3J19kt1WGj76vYIjctw7Lkmg9XFv1o5ZznDfLlTP79sPGjJzdYit924ApboTvIzjR44Fz2f2CscWEWJbwGwwhWWxBltKIzEWYd7sEBXJ4ROPe-W3pPpw41h5Tdn7FujE5fUMxugKrJ2atepLezQZsYBTqTZzDDds6yyWcNT7IpEkZPgdlkw_Z5kgjt-uiNH62v5753cnE9OK9n-uzLHCSKCRH9EpkWhvPZI2WN16F8YakGE17Dw7xKgpwBxlYrRVpTKhoPOx-rpge5vaR_1pRiVkCRcQBqxwkHSd0XvcOpIeIpdQiuDOiJp0MkxLATiVkfodMZJh4LaSyWyLL28Lg8Uw8q8cU1Lx_sMcMQuaN-1EPtD5jys6YFnWY6fq2SKvzR8Gke7du1De6lszjBXIC5-Xwqk_JMUvZdpmL9Zrn7W_4oDUZsgBcxsbQ8yPmNbi_4JKTQ91QfmlT-LsocdGDtgUNdThLcAo6lSCcldUUVI_v4SmmwGvUJwl9fiW6d0mJGBVHVuk2xVDbL6qvSMXmqxS69J9h4O6YxIejqvMhnRnS6wpsFFxY_WEJ1TJ3GqUi6qfXh7ut3Xx4wjLi6j8unY4B6Ofi4DXAeavaXPNaj-XtKgAlDKS8iy-EoVS6jaAFI17bFLXEkl1jiOdSm38NFxc7wyigSQETf6U4Tg_E5nOeODC1fpSlaoCWCqZM8qO_h1cNMLm2ZBFGJ7oyWLpGkvrrKQG0ebQwXWaPZUb1vEZco1xjJrWxeSvGibHgnlgFVWn_tH4qQzwCpSBYS7kxS2TPgZI3_w2y1xHcs1j_3zfRK1kxWnLmvp9AciC8WHuk4LmNYSH94rvtrDKOu2tn4Uyp0kwBU7mEgF6QojaA0yn8vwKdVQuvblAbbAjCA2maCjOCV4pXzEzpaz_UY92BSeXpNxowXCOUqcUGSTUS6bduh6qiY2KVXlYsEMzwYoTDnruYeFZt7Wu1QoHbRu-JFysLa_Z1hGeKOf2MQzGvQ=w1920-h902" alt="First slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="https://lh3.googleusercontent.com/fife/APg5EOajiZ-_-K9TTc0ghfny_AczWtzhD414hhOnHW22LjbohZ_9ijGnVQrCFsELGovZP37kKmyvlwPlOj-cHRjugt4MqPQxAIx0YAKvGsEBnUApCOfGeqh-nz4OSvdGF-3GSB6YcZbosVxp4JWiAf0zy-c4ATYc_kLcNzSUZYxG-UO6haIszrus2Q6bz62cAPJYilFFJ9U1pFh9Jxcggt8ZKaKXnD-jm6Fv7FOxzG356Iqqrnsw-8bqZJFu_m5CAjPzggvHoSulf8K-0RGb-o8j9YsRfIN9LQPIbiZFHy397DU4DMIRbbTDq9I6qge2tMTY-C_EzTaH34vCeJZWckww6FimZ9c7ovT16yN6bYbSxSLCEtKS1EiRhZHYBn8RMVC6maGbQfgD7c4vBCf9FAziDs4SBeXpdjc4NqJXTyMHy9LVWBL0n0fU9Edj9Wq2EH2z-JaVhAAGfus-qr9L6lUa1wB7t8Jnls4omGs1r4kU32xF6P1x_rVFyvHWjWeT5JnoN0PLmg3jTchQrOEhjJBWKmcET0AzNxqrWAGR_LcMSiBS0MpcR5iyP3SRGzyQGySSUxpLIDEW2Pq8mCbn7xmV-DJwlYptDBTfZq1O1xbGJVD_53XLhoK_TG6zA9qVSTRl_VgyCbiwYXIUe7dGZiRghoR-hF43ty8TVgjHSI-tu6yaMyAr5cU2juPqJ_Dl5iJikX7TB3SGA00s5oIiIbajeJ1NbbWuiFhDDGjVpjMXyeFDiaAOF5HMNyK82rOKgzQy75h5oRP8WjUrwt8dhNbAm3NoIbK2aoy0HAI3mtR3Vm7IEmlzP486uuiFxx9x34lP2KNqnDaZhSO1TYQZ282Almgkvoe9_osqMfYdmdTdRhAczhQTC0QFMN8SK4fkOaT3xt5cTF1i9TArpJ3n_gz88dAAHjo2gfR6KlCdm0-IhL7BeWX7yZsrkMg-2Eeegf0mTeIEIQq_NgUbdq6DiXn3u16s2xmnyVUQXFWq8rRVXoHeINB8PQa21wwzdIJZFX0KUYBE-qPJV3L0plfNYpKf1K-0j5-HR0xaJbzqZDFDfYp1tkpsWmV6x0l8DiyJOvX1KXR2eOWK0dK_YNaMyahNr3G0XmoOhLC2CiJnvseJAisvh4fp9EmwJcNmweDwmXdFiYsvcIVp0lbczBuBZn19_YP_x_J3gGYQ3_MDIKhCQC5SP_YfyhKtqGVvEXT_UnBpyz9oAe_ybAhcObWi3zNoLrFwh2rSbF34cPciJynX5JoTJPHU7qkuVQGG_Ff8uEUCUdD0lnU_26to8C_xjECMZ2yFKW84soY2JW9fBasOGmTtjI6Q7qYxNm3qTq7k1LGtpJxRjMK0uAGdrPSDlsEiK5m1VIu3Ww9aOaSMlwE-AhGF_WMenl__zZ3p-FicAKupaeIoJzcIPX8mCSuqTdTAboO_PWXBrC0uYLs1Iu6HC6iGiGV49T3iPi-zKHLvZX4oqgmQ75Z_Oyl4QQNmcvm3izgW0WYO6rn0EfUZMAPd8qY0w7o5s3b_6uk27GZzIezhYDP79Q=w1920-h902" alt="Second slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="https://lh3.googleusercontent.com/fife/APg5EOZWAI0aC9_gOSp0DTPXq7zxFlxRhsHppvE4sNXG7yMdTBLVZRNvv7UzgSCRdSAmHrBTlbqDsDvemV2iNgG48S25APuvPdFPiVwvIR7yb0IHaOpDChPgpkxj_j_435Tet7lNZYeu9QSIgSdXDWwpZ6ghNvXm6KouCOhOcveTCeNU_PvcXJxPv-qwyAdYNTv2nCgBimn5MmxYQDkaK6HUVK0ROMwh9D2mR2E76JwNCBAva9aoeFBXS_8hluyyOZKeff-f3qJgiWMaDqlknwlRV2ZNg57Ck-oriVSClrLXET0yyswNBgHkeuOC6kNOVTWhBUYMKsX2XflWOVh8hrY__YF7qY21CQ_2zYAozI4YN0r70FbWQMriLteoj4TgSiIZOEqLapLnrBLCfxHioWctlqc75jG8CIjkfnd_ftbOqDY_4FNiLf7RXC4eKN0uLlwWFle7GViiQi9Pum5jePru6I_m8cLjDlcZcGMCGan0RqIAnA6VEJcY_cvg9co-V3LOlK0LJ9Tncy5uq2nosZMX5bt3XUgGN95uCpE899ip1lj5XwMeesqLQ5oRNVt-Cc7xPdz1jyv3syTtZ4kd1rGQt0uI5UL8XChF3xk2xe_lamEjYKto8vnwZo1MFN38QSa8p4xDh1njg1-PdjVUVJ-NtwdgW77yTa8LUkDOPkGm1n2LATOizjMbYQeiPdL6NN5a7lQeK47mv5-1m-8OpEMB-KypWoK0T-vU6Bv7zundKBnbrq8nfDADMDsSTOrKlyriXEALgS59c5_kVU9-8SfcwAtmRl9_B7sIfLV3MIuUheokLMoxa6CVImwutUgDNHBB89SMYc_VUtixkuYicdHXUjS_DBWu818u-31ufFW8NzgPq_ZFeRMo6dJNb1KyT4WJHmKCiRk-KWM9Rj8e_0Bql3h8YhEJJAMgJowRZ8cv43uWPKzQi7cmJeSv1XKt4F6aDg2xJYWJw1Fyk0FKWYgfiZs1RXeGw1rVSojaacVHOR9YlO3yKDH-ROuikIdVA-zNdqWUHBRZ_fh0NHNFVG1_NYhNT6HQfNAamKamsj7Tb3ni3HEkZQ9ublUSNhhk7bfkyhHtbvaicaHpxEYEfomqIEvO9GRY4uJHh3kqb1VJs3x-Pa5mqVMPiTMp_YoMZGhB9V5QeWGogx7RSjpmOsdHTHe5lUM_deEEpiaKFcwH4AQt1kNup3rlaj5GiBdE8TjoDeqDQVgxwMuDH7oezy2qUU0X0nDncpFNmZCKyx8rv6BeU7k3hM_uioBDCw7lMUFFRQGPe4VgyVxqDEJcftDTz_z0HaI5i2c6epBYCceESPL8TDMvhw1GHBNq7bo4P1GXBUnhlCsNZiK23_USFouKKe9PjmOSWJqP7Pm0joD-tk_nagfAd7j_LRW3DB7KPWb2NSP_JW7CihLom4n9UPwop6ltSVlYZiTfFysYzQ9RRWpSZk8AGZsjG4lE_cTCo16xB-rEpTK8VyawiCPkvkh2HK0rYjngvjKaCcpERe5ADRcRiir3Z1JaC0jH2bgFoYIce37onQ=w1920-h902" alt="Third slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="https://lh3.googleusercontent.com/fife/APg5EOahafxG3xKPz2_ZXUa045ppKbu4mNPJNIECKm7HkQsygWhdYgVM_Teko4CXxOyII_VowK91Z-BFyRo98hEDxWV7s371bNKlAhoZOHofkzQ9NrrQxiVGYharYJcP3mCwI0swIPCp7TwCOYGZq8BY6nmE7OfZupEDmxV1efPiKI5S1_z8EGRUnlTpfIBpBrcQ7Sj54EaPuTMWmCsjNjnXD8cbdkDQzv_CM7s7n3VWpW3cMdxRpts_KcPtj5K9SSufhmKqW5sYY7-_To5x378QA6zMtT6gfp9dF9J_i7SI1QvdOKf-9zcfhYj2bLsNljRfFjRi_YQNVaeepK5KHaCWi0Xdg4UNjBie025xdhkIbEaXVas0JMVBAF58EUPUFSCqiAmxfru6aDm-gTyuq76_dgudqs1OQRZEfF4WotITrfzYfatBYPCxQnNCkYVWWcdQW38EvZbWgA7GvC3by5xIblbteYC21Q1SkvLBaeWvVxL939ujgECjkeCP0zVknpsktG6jS12JYMkHfdmX5g9D0VDgi5OanhUYEUA52Mq05oF1idyXAZNRupC-_ycMI8n1pgMz-2CrrqoiT4m8VYlvgv1eiJbu28nPhzAqx4LvRm8a8QIUfXEvCAMMNGsBvTwKPm-XouYrVKsE8tut8R9muWS6HUf_OxwRiPBe_-kzHuZIMBAaBV4xL6us6ijMpQsyY6R5M_UD160Lz2t8goCYSICaCcZmqqI7j9nKuJvQut7tnOtEQCEiL7sb9__l3u7nkE70oAGvaBeVusFklQw4gU03aYkBS0bq04YsyatKbpj-pyi9TNl3CBTfwrO9I2eq8GsMvwk8EUTyAtjI9_fsaBmKl6Te-1Jmrd_EL3WDHCPhKH8VE5dPfVztDfF_4gkWd27-fGPjx8SDqpb6-2cNBC_tQ-Zpj0UQ65Ik7fJaKzgyIIPSwYhoTknd6f2ZAoPbw0MmmmfjEbisxnZCnfEkzm7kbR18wcCrMGjCV1ty23f9WxXSBrskWuuoOGhRDSjFIDHClUEm7qpXlu6ve5G3dkX8bm03zdnyG1-uPTJde5Hp2QvsLxv1-KFYosgDtV1qVVKlAj_AHJVVPjh5p5v15c5ST9pExnb78z4ZgtPPBoavVpbFaVdNMf541xE4qU6ee3avc_9DKBHLI5aBhq27XrbFGX7BjooWJDIWK-ftDZklEtBcY25UAxazwOFi25daojooaEZethUOBnrjkyRBbBsz2NAmFnPF9AelMIRsXt4kdjCIF43609P1V5dZQ30kTU1_9seRdKO_IaFELEAKt1Cgk-ns005fnTUnZOAI6TxHkpq376qdtcsQfN3vR1ymco_rPonyHB2xv-vNbeI6_pGvUMhy0S9IrI1GO7_eHNfPCFZzWkPW-LJIZnUw1E213rLzpNW7zSv5QWcitbhq3f6mCEDz0IPAAXIdiALMxugEcrRWDTVZ5BEm8WhpvFEr9mvqOn00rVIMg_7TbQBIYufxxV9ll4vjSYcmR6bFKcbOW2M0Cw50G-Xa8jip6BiycgCvuw=w1920-h902" alt="Third slide">
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="https://lh3.googleusercontent.com/fife/APg5EOa5pMh9C5k8JFSuTTJ4USmjY7wPyAEe99wQATS1RGn0jMLjdCUB6wrhqYDur8423_pKL6OboTX65kGtORW3J02vRwxdwkt1LxLzgy3dPb0vu0_c8jNqAco145TICHtNa7QbHWlrE3QJLgTK6cf1o02MDtI0Zhv_NtQyQzN4UIn4SdSEGphuOKotEajp4Ck5j6xUvqmoOXoZcHzTpVGAXlDDDEyKxMW4yUaCEzw1oBgwNdFdsTzcZ0A7BirDGq_ushnsMlFQJLxdesdGbgbReWRtyZSjmnvPsqeHfU7Ca47mFpxkJ9hIs9GKXil6EYHGEOP-D5-uaRDwFmxPOdovALxCg9OLn1uGlysvLukpoCfqRMuDrxjEDMvjWKOgEZQj2MPseWNtmDWcu1zrP3b25YeywAthHFzRLOx6QFEYuJGg9f3ghZhA9TWbvZ8DjjkxLXQ-FeakIwFx7ujcZF5kghnBaCCWXt00jx_Us6V3PkuDtn7SSygbpHiC7_PuJ2aIENBWKQzwd9JHti_nmH64Nr8CRAjEoOhdboVii4MeWVORJrMwgTp_LHbxQ0Z4vOuZBbKg09lZCQm8V5eEXE8drD9KgWxmS89MBhhqRYtFB3GxCTfu034cCGxGm1-7HHOwgiIh76IziuPdEOLe-b0aasg86D4h2qgdTCXoAvUq6Y7KVSwZtmQdIHg5XU2VvwHsIIY-cbqx2QJRDc7VxfH_lrrJ-PIhfhJ1ZFArPkVoeW4FCm4Gxqbi4sJTNq0O1FBuARHYf9uhyU_dsCMQul2Zdh-zBZKuuMihk1zUzw9CaVfUsyPqCQ8G1jZQPcWnl-EPg--clBWrmi9DaH68cL0GcVqmhtp-NaO1tKSnrpGdMGsntUKWtzBEFFb26O5ZO4-a6VEY857cLAr0LAU-MCRd0RCbyfqzKoBu4BZZD6AHIQhlk_k6nFX243aRjlX6dfIJceeqankC3PGpBYJ4MbWIlaakTXvOXLg3JCQ44MXpSCz86lBwA47wzapm-Ov1sK3CaA5I8G_4waLdi_UEOV3A8jR0HSTUZdwwiMcgyd_00zl5CT6I1CEoBSzTxbjXjPLfgM-V0EWkfQUNpRxSSaRBzmogJ8y4LzCh5uEDIX-2mf6L9H3iY8tvDC50jO4nhB0KPlZh1n2Q-6fRZXwTEHaaHTPgI-FJS5Lqcc52S_Gg92gqvlD-AFwLm6dzGtcbJ9V-kL2n66HXZUm5Pp3v01pewqpTMKgfm1RPtrLY5Kb_3pqCcq87nmjwfTtj2b_jDW6IJHdxeUp7kDpiP-RcP6ZeBWzt6P2zC0KAvoFOz2IqQxU4tuvjcd-cX4xXBxlYWjdd4__c3lMConjEjM_1-0Q9prx5x95K6qt6pNQ5-HuKHrc4bMpMvAWqAuKGZCWxDgw2CfVP8XlyyMGzGBOmOQLcuHYi92n_wozbgU_xNWZ7SBfbv_oDdW9xsiz3EyrEahGOeaD6hpOXrQTNQ1iuKf9fbLZvC_9-Ya6SEZR4fcXtcN7n_VHyIOXqecqWlTpsgHlGVck95w=w1920-h902" alt="Third slide">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
+    <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}" class="center">
+        <p class="h3 font-weight-bold" th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>
+    </div>
+
+    <div class="row">
+        <th:block th:each="item, status: ${items.getContent()}">
+            <div class="col-md-4 margin">
+                <div class="card">
+                    <a th:href="'/item/' +${item.id}" class="text-dark">
+                        <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemName}">
+                        <div class="card-body">
+                            <h4 class="card-title">[[${item.itemName}]]</h4>
+                            <p class="card-text">[[${item.itemDetail}]]</p>
+                            <h3 class="card-title text-danger">[[${item.price}]]원</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <div th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})" >
+        <ul class="pagination justify-content-center">
+
+            <li class="page-item" th:classappend="${items.number eq 0}?'disabled':''">
+                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}" aria-label='Previous' class="page-link">
+                    <span aria-hidden='true'>Previous</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${items.number eq page-1}?'active':''">
+                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
+            </li>
+
+            <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled':''">
+                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number+1}}" aria-label='Next' class="page-link">
+                    <span aria-hidden='true'>Next</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+</div>

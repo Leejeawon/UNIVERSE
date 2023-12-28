@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <!-- Head contents -->
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h2>글쓰기</h2>
+    <form method="post" th:action="@{/noticeboard/new}">
+        <label>제목: <input type="text" th:field="${post.title}" required /></label><br/>
+        <label>비밀번호: <input type="password" th:field="${post.password}" required /></label><br/>
+        <label>내용: <textarea th:field="${post.content}" required></textarea></label><br/>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="/noticeboard/list">Back to List</a>
+</div>
+</body>
+
+</html>

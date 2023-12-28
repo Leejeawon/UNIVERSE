@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <!-- Head contents -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function showErrorMessage() {
+            alert('작성할 때 쓴 비밀번호가 아닙니다. 다시 확인해주세요');
+        }
+        /*]]>*/
+    </script>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h2>게시글 수정</h2>
+    <form method="post" th:action="@{'/noticeboard/edit/' + ${post.id}}"
+          onsubmit="return validatePassword()">
+        <label>제목: <input type="text" th:field="${post.title}" required /></label><br/>
+        <label>비밀번호: <input type="password" th:field="${post.password}" required /></label><br/>
+        <label>내용: <textarea th:field="${post.content}" required></textarea></label><br/>
+        <button type="submit">Update</button>
+    </form>
+    <a href="/noticeboard/list">게시글 목록</a>
+
+    <!-- Add the following script -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function validatePassword() {
+            var password = /*[[${post.password}]]*/ '';
+            var userInput = document.getElementById('password').value;
+
+            if (password !== userInput) {
+                showErrorMessage();
+                return false;
+            }
+
+            return true;
+        }
+        /*]]>*/
+    </script>
+</div>
+</body>
+
+</html>

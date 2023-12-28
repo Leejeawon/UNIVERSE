@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+
+        .carousel-inner > .item {
+            height: 350px;
+        }
+        .margin{
+            margin-bottom:30px;
+        }
+        .banner{
+            height: 300px;
+            position: absolute; top:0; left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .card-text{
+            text-overflow: ellipsis;
+<!--            white-space: nowrap;-->
+<!--            overflow: hidden;-->
+            word-wrap : break-word;
+            webkit-line-clamp: 3;
+        }
+        a:hover{
+            text-decoration:none;
+        }
+        .center{
+            text-align:center;
+        }
+
+        .slide {
+        	margin-bottom: 50px;
+        }
+        /* Footer Styles */
+    .footer {
+        color: black; /* Light text color */
+        padding: 20px 0; /* Adjust the padding as needed */
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        background-color: #f8f9fa; /* Light background color */
+    }
+
+    .Essential,
+    span,
+    a {
+        color: black; /* Black text color for links */
+        display: inline-block;
+        margin-right: 20px; /* Adjust the spacing between links */
+        text-decoration: none;
+    }
+
+    .link-light {
+        color: #6c757d; /* Gray text color for small links */
+    }
+
+    .link-light:hover {
+        color: #000000; /* Black text color on hover */
+    }
+
+    /* Container Styles */
+    .container {
+        max-width: 960px; /* Limit the width of the container */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .col-auto {
+        flex: 0 0 auto;
+        width: auto;
+    }
+
+    @media (max-width: 768px) {
+        .col-auto {
+            width: 100%;
+            margin-bottom: 20px; /* Add spacing between columns on small screens */
+        }
+    }
+
+    /* Rest of your styles... */
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .footer {
+        margin-top: auto;
+    }
+
+    /* Form Styles */
+<!--    form {-->
+<!--        max-width: 600px;-->
+<!--        margin: 20px auto;-->
+<!--        padding: 20px;-->
+<!--        border: 1px solid #dee2e6;-->
+<!--        border-radius: 4px;-->
+<!--        background-color: #ffffff;-->
+<!--    }-->
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 8px;
+<!--        margin-bottom: 15px;-->
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #007bff;
+        color: #ffffff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #0056b3;
+    }
+
+    h2{
+      margin: auto;
+    }
+        .card {
+    height: 100%; /* Set a fixed height for all cards */
+}
+
+.card-img-top {
+    object-fit: cover; /* Maintain aspect ratio of the image within the card */
+    height: 60%; /* Adjust the height based on your design preference */
+}
+
+.card-body {
+    height: 40%; /* Adjust the height based on your design preference */
+}
+
+/* Optional: If you want to ensure equal spacing between cards, you can add margin-bottom */
+.margin {
+    margin-bottom: 20px; /* Adjust the margin based on your design preference */
+}
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="video-container">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/NamBj-NgRSw?autoplay=1&muted=1&mute=0" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <input type="hidden" name="searchQuery" th:value="${boardSearchDto.searchQuery}">
+    <div th:if="${not #strings.isEmpty(boardSearchDto.searchQuery)}" class="center">
+        <p class="h3 font-weight-bold" th:text="${boardSearchDto.searchQuery} + '검색 결과'"></p>
+    </div>
+
+    <div class="row">
+        <th:block th:each="board, status: ${boards.getContent()}">
+            <div class="col-md-4 margin">
+                <div class="card">
+                        <img th:src="${board.imgUrl}" class="card-img-top" th:alt="${board.boardName}">
+                        <div class="card-body">
+                            <h4 class="card-title">[[${board.boardName}]]</h4>
+                            <p class="card-text">[[${board.boardDetail}]]</p>
+                        </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <div th:with="start=${(boards.number/maxPage)*maxPage + 1}, end=(${(boards.totalPages == 0) ? 1 : (start + (maxPage - 1) < boards.totalPages ? start + (maxPage - 1) : boards.totalPages)})" >
+        <ul class="pagination justify-content-center">
+        </ul>
+    </div>
+
+</div>

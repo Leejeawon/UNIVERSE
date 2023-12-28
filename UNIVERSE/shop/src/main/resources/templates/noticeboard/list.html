@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <!-- Head contents -->
+</head>
+
+<body>
+<div layout:fragment="content">
+    <h2>Notice Board</h2>
+
+
+    <table border="1">
+        <tr>
+            <th>No</th>
+            <th>제목</th>
+            <th>수정/삭제</th>
+        </tr>
+        <tr th:each="post : ${posts}">
+            <td th:text="${post.id}"></td>
+            <td>
+                <a th:href="@{'/noticeboard/detail/' + ${post.id}}" th:text="${post.title}">Post Title</a>
+            </td>
+            <td>
+                <a th:href="@{'/noticeboard/edit/' + ${post.id}}">Edit</a>
+                <a th:href="@{'/noticeboard/delete/' + ${post.id}}">Delete</a>
+            </td>
+        </tr>
+    </table>
+    <a href="/noticeboard/new" style="display: block; text-align: right;">게시글 작성</a>
+</div>
+</body>
+
+</html>
